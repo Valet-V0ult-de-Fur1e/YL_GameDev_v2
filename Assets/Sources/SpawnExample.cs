@@ -8,6 +8,7 @@ public class SpawnExample : MonoBehaviour
 
     private int _index;
     private float _secondsPerIndex = 1f;
+    private Asteroid _lastGenerateAsteroid;
 
     private void Update()
     {
@@ -26,14 +27,17 @@ public class SpawnExample : MonoBehaviour
 
         if (chance < 20)
         {
-            _factory.CreateNlo(new Nlo(_init.Ship, GetRandomPositionOutsideScreen(), Config.NloSpeed));
+            if (_lastGenerateAsteroid != null)
+            {
+                _factory.CreateNlo(new Nlo(_lastGenerateAsteroid, GetRandomPositionOutsideScreen(), Config.NloSpeed));
+            }
         }
         else
         {
             Vector2 position = GetRandomPositionOutsideScreen();
             Vector2 direction = GetDirectionThroughtScreen(position);
-
-            _factory.CreateAsteroid(new Asteroid(position, direction, Config.AsteroidSpeed));
+            _lastGenerateAsteroid = new Asteroid(position, direction, Config.AsteroidSpeed);
+            _factory.CreateAsteroid(_lastGenerateAsteroid);
         }
     }
 
