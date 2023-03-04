@@ -24,6 +24,11 @@ public class Root : MonoBehaviour
         _shipInputRouter.OnDisable();
     }
 
+    public int GetLives()
+    {
+        return _shipPresenter.GetLives();
+    }
+
     private void Awake()
     {
         _shipModel = new Ship(new Vector2(0.5f, 0.5f), 0);
